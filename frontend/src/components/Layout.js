@@ -14,6 +14,7 @@ function Layout(props) {
 	const loadingRef = useRef(null);
 
 	useEffect(() => {
+		if (method === 'search' && !filterText) { return setPhotos([])}
 		getPhotos()
 	}, [page, method, filterText])
 
@@ -54,9 +55,8 @@ function Layout(props) {
 		} catch (error) {
 			setIsLoading(false)
 			if (error.response.status === 400) {
-				console.log(error.response.data.data)
 				if (error.response.data.data === 'NotSupportedFlickrMethod') {
-					return setError('Could not get the photos. Not supported flickr method provided')
+					return setError('Could not get the photos. Not supported flickr method provided.')
 				}
 			}
 			setError('Could not get the photos.')
@@ -68,14 +68,14 @@ function Layout(props) {
 			<nav className="navbar bg-light navbar-expand-md">
 				<div className="container d-flex justify-content-start">
 					<Button className="nav-link px-4 btn-warning mr-3" onClick={() => { 
-						setMethod('recenst') 
 						setPhotos([])
+						setMethod('recent') 
 					}}>
 						Recent
 					</Button>
 					<Button className="nav-link px-4 btn-warning mr-3" onClick={() => { 
-						setMethod('search')
 						setPhotos([])
+						setMethod('search')
 					}}>
 						Search
 					</Button>
@@ -89,7 +89,7 @@ function Layout(props) {
 									if (method === 'search') {
 										setPhotos([])
 									}
-									setFilterText(e.target.value)
+									setFilterText(e.target.value) 
 								}}
 							/>
 						</Form.Group>

@@ -7,7 +7,6 @@ const { ValidationError } = require('../errors')
 router.get('/:method', wrap(async function (req, res) {
     const method = flickrAPI.METHODS[req.params.method]
 
-    console.log(method)
     if (!method) {
         throw new ValidationError('NotSupportedFlickrMethod')
     }
